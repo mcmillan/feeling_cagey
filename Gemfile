@@ -1,0 +1,10 @@
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "sinatra-contrib", require: "sinatra/reloader"
+gem "ruby-opencv", github: "ruby-opencv/ruby-opencv"
+gem "instagram"
+gem "mongo_mapper"
+gem "sidekiq"
+gem "bson_ext"
+gem "dotenv"

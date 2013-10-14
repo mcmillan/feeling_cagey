@@ -39,3 +39,4 @@ _yardoc
 doc/
 
 .env
+.sass-cache

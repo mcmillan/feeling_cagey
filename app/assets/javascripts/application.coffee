@@ -1,3 +1,4 @@
+# Horrible convenience function to render a photo
 renderPhoto = (photo) ->
 
   image = new Image()
@@ -29,6 +30,7 @@ renderPhoto = (photo) ->
 
   )
 
+# Boot application
 image = new Image()
 image.src = '/img/cage.png'
 
@@ -38,4 +40,10 @@ $(image).on('load', ->
     url: '/photos.json',
     success: (photos) -> $(photos).each(-> renderPhoto(this))
   )
+
 )
+
+# Pusher stuff
+pusher  = new Pusher(PUSHER_KEY)
+channel = pusher.subscribe('cage')
+channel.bind('new_photo', renderPhoto)

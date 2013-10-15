@@ -11,15 +11,18 @@ Have a hearty and nutritious breakfast. There's no point in coding on an empty s
 - Ruby (I've tested it on >= 2.0.0, but in theory it should work with 1.9.x)
 - OpenCV (`brew tap homebrew/science && brew install opencv` if you're on OS X)
 - MongoDB (did you know this app is valued at $1.2bn too?)
+- A Pusher account (this handles the *highly important* real-time addition of cage)
 
 ## Install the app
 
-Clone the source and run `bundle install` to install those juicy gems. After this, you're going to need to create a .env file with some configuration options in - 4 of them to be precise. Hopefully it'll look a bit like this.
+Clone the source and run `bundle install` to install those juicy gems. After this, you're going to need to create a .env file with some configuration options in - 6 of them to be precise. Hopefully it'll look a bit like this.
 
+    TAG=selfie
     INSTAGRAM_CLIENT_ID=YOUR_INSTAGRAM_CLIENT_ID
     INSTAGRAM_CLIENT_SECRET=YOUR_INSTAGRAM_CLIENT_SECRET
-    TAG=selfie
     MONGODB_URL="mongodb://mongodb_user:mongodb_password@your_mongodb_host:mongodb_port/mongodb_database"
+    PUSHER_KEY=YOUR_PUSHER_KEY
+    PUSHER_URL="http://key:secret@api.pusherapp.com/apps/app_id"
 
 The app is split up into two parts, the web interface (`lib/app.rb`) and the Instagram poller (`lib/update.rb`).
 

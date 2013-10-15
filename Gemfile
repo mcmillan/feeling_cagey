@@ -13,6 +13,9 @@ gem "coffee-script", "~> 2.2.0"
 gem "ruby-opencv", github: "ruby-opencv/ruby-opencv", require: "opencv"
 gem "instagram", "~> 0.10.0"
 
+# Pusher
+gem "pusher", "~> 0.12.0"
+
 # Database
 gem "mongo_mapper", "~> 0.12.0"
 gem "bson_ext", "~> 1.9.2"

@@ -71,10 +71,10 @@ while true
         next if region.width < 100 # Smaller faces are more likely to be false-positives and aren't as funny, so skip them
 
         p.faces << {
-          width: region.width,
-          height: region.height,
-          top: region.top_left.y,
-          left: region.top_left.x
+          "width" => region.width,
+          "height" => region.height,
+          "top" => region.top_left.y,
+          "left" => region.top_left.x
         }
       end
     rescue => e
@@ -94,6 +94,22 @@ while true
     puts "--- Saving..."
 
     p.save
+
+    processed = {
+      filter: p.filter_class,
+      image_url: p.image_url,
+      faces: []
+    }
+
+    p.faces.each do |face|
+      processed[:faces] << {
+        top: top(face['top'], face['height'], p.height),
+        left: left(face['left'], face['width'], p.width),
+        width: width(face['width'], p.width)
+      }
+    end
+
+    Pusher["cage"].trigger("new_photo", processed)
   end
 
   puts "-- All media processed"
@@ -101,5 +117,4 @@ while true
   # Update the min_id, have a little sleep for 10 seconds so we don't hit any rate limits (fat chance with the
   # time it takes to process these images, however it might be a concern if you're using an obscure hashtag)
   min_id = media.pagination.min_tag_id
-  sleep 10
 end

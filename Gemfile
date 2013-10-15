@@ -1,14 +1,22 @@
 source "https://rubygems.org"
 
-gem "sinatra", require: false
-gem "sinatra-contrib", require: false
-gem "sprockets"
-gem "sass"
-gem "coffee-script"
+# Sinatra
+gem "sinatra", "~> 1.4.3", require: false
+gem "sinatra-contrib", "~> 1.4.1", require: false
+
+# Assets
+gem "sprockets", "~> 2.10.0"
+gem "sass", "~> 3.2.12"
+gem "coffee-script", "~> 2.2.0"
+
+# Media retrieval/processing
 gem "ruby-opencv", github: "ruby-opencv/ruby-opencv", require: "opencv"
-gem "instagram"
-gem "mongo_mapper"
-gem "bson_ext"
-gem "sidekiq"
-gem "dotenv"
-gem "rake"
+gem "instagram", "~> 0.10.0"
+
+# Database
+gem "mongo_mapper", "~> 0.12.0"
+gem "bson_ext", "~> 1.9.2"
+
+# Utility
+gem "dotenv", "~> 0.7.0"
+gem "rake", "~> 10.1.0"

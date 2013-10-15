@@ -1,6 +1,6 @@
 # BIG FAT DISCLAIMER OF DREAMS:
 # This code isn't very nice. It was written at speed and this whole thing was built in about half a day.
-# Some of it doesn't make sense and should be taken with a pinch of salt. It's an app which photomanipulates Nicolas Cage, for god's sake. 
+# Some of it doesn't make sense and should be taken with a pinch of salt. It's an app that photomanipulates Nicolas Cage, for god's sake. 
 require File.expand_path(File.dirname(__FILE__) + '/boot')
 require "fileutils"
 

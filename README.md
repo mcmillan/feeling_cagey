@@ -37,7 +37,7 @@ To get this particular party started run `bundle exec rake`. It's fairly CPU int
 
 ## FAQs
 
-Like you've got any!
+Like you've actually made it this far down the page.
 
 ### Why?
 
@@ -57,10 +57,6 @@ Two reasons:
 ### Why aren't there any tests?
 
 It's an app with about 200 lines of code that superimposes photos of Nicolas Cage onto Instagram selfies. I'm all for TDD, but really?
-
-### Why is the code so bad?
-
-I'm drunk.
 
 ## Contributing
 

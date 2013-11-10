@@ -3,6 +3,7 @@
 # Some of it doesn't make sense and should be taken with a pinch of salt. It's an app that photomanipulates Nicolas Cage, for god's sake. 
 require File.expand_path(File.dirname(__FILE__) + '/boot')
 require "fileutils"
+require "digest"
 
 # Start afresh
 Photo.destroy_all 
@@ -14,10 +15,16 @@ min_id = 0
 #  - Beyonce, 2013
 while true
 
+  puts "- Clearing out photos that are >= 5 minutes old"
+  count = Photo.count
+  Photo.destroy_all(:created_at.lte => 5.minutes.ago)
+  count = count - Photo.count
+  puts "- Deleted #{count} photos"
+
   puts "-- Hitting Instagram for media tagged with #{ENV["TAG"]}, min_id #{min_id}"
 
   # Get all the media, y0
-  media = Instagram.client.tag_recent_media(ENV["TAG"], min_id: min_id, count: 50)
+  media = Instagram.client.tag_recent_media(ENV["TAG"], min_id: min_id, count: 25)
 
   puts "-- #{media.count} results returned from Instagram"
 
@@ -31,29 +38,21 @@ while true
       next
     end
 
-    p = Photo.new({
-      source_id: m.id,
-
+    p = Photo.new({      
       image_url: m.images.standard_resolution.url,
       width: m.images.standard_resolution.width,
       height: m.images.standard_resolution.height,
-
-      filter: m.filter,
-      caption: m.caption ? m.caption.text : nil,
-      url: m.link,
-      uploaded_at: m.created_time,
-
-      author_username: m.user.username,
-      author_name: m.user.full_name,
-      author_picture: m.user.profile_picture
+      
+      uploader: (Digest::SHA2.new << m.user.username).to_s,
+      filter: m.filter
     })
 
     # Set up the Haar Classifier using haar.xml. fullfrontal_alt.xml appears to work best from the default Haar cascades that are supplied with OpenCV.
     detector    = OpenCV::CvHaarClassifierCascade::load(File.expand_path(File.dirname(__FILE__) + '/haar.xml'))
 
     # Define where we're going to whack this image temporarily.
-    # All Instagram images are jpegs for now (if this changes it shouldn't matter as )
-    output_file = "tmp/#{p.source_id}.jpg"
+    # All Instagram images are jpegs for now
+    output_file = "tmp/#{p.id}.jpg"
 
     begin
       puts "--- Downloading image..."
@@ -68,7 +67,7 @@ while true
 
       # Do all the detection and shit
       detector.detect_objects(cv_image).each do |region|
-        next if region.width < 100 # Smaller faces are more likely to be false-positives and aren't as funny, so skip them
+        next if region.width < 150 # Smaller faces are more likely to be false-positives and aren't as funny, so skip them
 
         p.faces << {
           "width" => region.width,
@@ -95,21 +94,7 @@ while true
 
     p.save
 
-    processed = {
-      filter: p.filter_class,
-      image_url: p.image_url,
-      faces: []
-    }
-
-    p.faces.each do |face|
-      processed[:faces] << {
-        top: top(face['top'], face['height'], p.height),
-        left: left(face['left'], face['width'], p.width),
-        width: width(face['width'], p.width)
-      }
-    end
-
-    Pusher["cage"].trigger("new_photo", processed)
+    Pusher["cage"].trigger("new_photo", p.filtered_for_json)
   end
 
   puts "-- All media processed"

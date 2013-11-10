@@ -33,7 +33,7 @@ class @FeelingCagey
 
     scrollTop = $(window).scrollTop()
 
-    $('footer').toggleClass('hidden', scrollTop > 100)
+    $('footer .disclaimer').toggleClass('hidden', scrollTop > 100)
 
   # Horrible convenience function to render a photo
   @renderPhoto = (photo, append = false) ->

@@ -1,49 +1,76 @@
-# Horrible convenience function to render a photo
-renderPhoto = (photo) ->
+class @FeelingCagey
 
-  image = new Image()
-  image.src = photo.image_url
+  @boot: ->
 
-  $(image).on('load', ->
+    $(window).on('scroll', @hideFooterOnScroll)
 
-    gridElement = $('<div />').attr('class', 'photo')
+    @preloadCage(=>
+      @loadInitialPhotos()
+      @initializePusher()
+    )
 
-    $('<img />').attr('src', photo.image_url).appendTo(gridElement)
-    
-    $(photo.faces).each(->
+  @preloadCage = (callback) ->
 
-      $('<div class="face"><img src="/img/cage.png"></div>')
-        .css('top', "#{@top}px")
-        .css('left', "#{@left}px")
-        .css('width', "#{@width}px")
-        .appendTo(gridElement)
+    image = new Image()
+    image.src = '/img/cage.png'
+
+    $(image).on('load', callback)
+
+  @loadInitialPhotos = ->
+
+    $.ajax(
+      url: '/photos.json',
+      success: (photos) => $(photos).each((key, value) => @renderPhoto(value, true))
+    )
+
+  @initializePusher: ->
+
+    pusher  = new Pusher(PUSHER_KEY)
+    channel = pusher.subscribe('cage')
+    channel.bind('new_photo', @renderPhoto)
+
+  @hideFooterOnScroll = ->
+
+    scrollTop = $(window).scrollTop()
+
+    $('footer').toggleClass('hidden', scrollTop > 100)
+
+  # Horrible convenience function to render a photo
+  @renderPhoto = (photo, append = false) ->
+
+    image = new Image()
+    image.src = photo.image_url
+
+    $(image).on('load', ->
+
+      return if append && $('.grid .photo').length >= 25
+
+      gridElement = $('<div />').attr('class', 'pure-u-1-5 photo')
+
+      $('<img />').attr('src', photo.image_url).appendTo(gridElement)
+      
+      $(photo.faces).each(->
+
+        $('<div class="face"><img src="/img/cage.png"></div>')
+          .css('top', "#{@top}%")
+          .css('left', "#{@left}%")
+          .css('width', "#{@width}%")
+          .appendTo(gridElement)
+
+      )
+
+      gridElement[if append then 'appendTo' else 'prependTo']('.grid')
+
+      if $('.grid .photo').length > 25
+        target = if append then 'first' else 'last'
+        $(".grid .photo:#{target}").remove()
+
+      setTimeout(->
+
+        gridElement.addClass('visible')
+
+      , 50)
 
     )
 
-    gridElement.prependTo('.grid')
-
-    setTimeout(->
-
-      gridElement.addClass('visible')
-
-    , 100)
-
-  )
-
-# Boot application
-image = new Image()
-image.src = '/img/cage.png'
-
-$(image).on('load', ->
-
-  $.ajax(
-    url: '/photos.json',
-    success: (photos) -> $(photos).each(-> renderPhoto(this))
-  )
-
-)
-
-# Pusher stuff
-pusher  = new Pusher(PUSHER_KEY)
-channel = pusher.subscribe('cage')
-channel.bind('new_photo', renderPhoto)
+@FeelingCagey.boot()

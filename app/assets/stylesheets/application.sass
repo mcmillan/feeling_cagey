@@ -1,15 +1,15 @@
-$barBackgroundColour: #2980b9
+@import "bourbon"
+
+$barBackgroundColour: #fff
 
 *
-
-  margin: 0
-  padding: 0
+  
+  -webkit-backface-visibility: visible
 
 body
 
-  font: 14px 'Montserrat', sans-serif
+  font: 300 13px "europa", "Europa", "Helvetica Neue", "Helvetica", "Arial", sans-serif
   background: #000
-  color: #fff
 
 header
 
@@ -26,48 +26,28 @@ header
   h1
 
     line-height: 60px
-
-footer
-
-  background: $barBackgroundColour
-  position: fixed
-  bottom: 0
-  left: 0
-  width: 100%
-  padding: 15px 0
-  text-align: center
-
-  .description
-
-    padding: 0 20px 6px
-
-  .legal
-
-    font-size: 10px
+    margin: 0
 
 .grid
 
+  position: relative
+  z-index: 2
   margin-top: 60px
   text-align: center
 
   .photo
 
     position: relative
-    width: 320px
-    height: 320px
     overflow: hidden
-    display: inline-block
-    margin: 0
-    padding: 0
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale")
     filter: gray
     -webkit-filter: grayscale(1)
     opacity: 0
-    transition: 0.5s ease all
+    +transition(0.5s ease all)
 
     &.visible
 
-      opacity: 0.75
+      opacity: 1
 
       &:hover
 
@@ -80,16 +60,49 @@ footer
       width: 100%
       height: 100%
       display: block
-      position: absolute
-      top: 0
-      left: 0
-      z-index: 1
+      z-index: 2
 
     .face
 
       position: absolute
-      z-index: 2
+      z-index: 3
 
       img
 
         width: 100%
+
+.loading
+
+  position: fixed
+  top: 50%
+  left: 0
+  width: 100%
+  margin-top: -30px
+  font-size: 24px
+  color: #333
+  text-align: center
+  z-index: 1
+
+footer
+
+  background: $barBackgroundColour
+  position: fixed
+  bottom: 0
+  left: 0
+  width: 100%
+  padding: 6px 0
+  text-align: center
+  z-index: 10
+  +transition(0.3s ease opacity)
+
+  > div
+
+    margin: 5px 12px
+
+  .legal
+
+    font-size: 10px
+
+  &.hidden
+
+    opacity: 0

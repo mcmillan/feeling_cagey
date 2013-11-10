@@ -46,10 +46,6 @@ Like you've actually made it this far down the page.
 
 Why not?
 
-### Why do you load the assets from /photos.json rather than just putting them directly on the page?
-
-In production, this application is served directly from Amazon S3 (with heavy modifications). We simply overwrite photos.json every 15 seconds from a micro instance, meaning we never have to serve any requests through the Ruby/Sinatra stack. The primary rationale behind this is that it makes this app super cheap to run and I don't have to sit here looking perplexed at 4am because I'm reading Amazon's auto scaling group documentation again.
-
 ### Why don't you use Instagram's real-time callback functionality?
 
 Two reasons:

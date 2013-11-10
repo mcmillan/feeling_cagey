@@ -10,7 +10,7 @@ Have a hearty and nutritious breakfast. There's no point in coding on an empty s
 
 - Ruby (I've tested it on >= 2.0.0, but in theory it should work with 1.9.x)
 - OpenCV (`brew tap homebrew/science && brew install opencv` if you're on OS X)
-- MongoDB (did you know this app is valued at $1.2bn too?)
+- MongoDB (for added web scale; did you know this app is valued at $1.2bn too?)
 - A Pusher account (this handles the *highly important* real-time addition of cage)
 
 ## Install the app

@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/boot')
 require "sinatra"
 require "sinatra/reloader"
 
+set :server, :puma
+
 get '/' do
   erb :index
 end

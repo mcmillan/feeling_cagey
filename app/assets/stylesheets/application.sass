@@ -113,30 +113,46 @@ footer
 
   .contact
 
-    padding-bottom: 4px
     +clearfix
 
     .credits
 
       float: left
+      width: 40%
 
-    .pusher
+    .pusher,
+    .gamaroff
 
       display: block
-      float: right
+      float: left
       color: #333
       text-decoration: none
       line-height: 17px
-      vertical-align: top
+      vertical-align: middle
       font-size: 11px
+      width: 30%
+      text-align: left
 
-    @media screen and (max-width: 450px)
+      img
 
-      .credits,
-      .pusher
+        display: inline-block
+        vertical-align: middle
+        margin: 0
+        padding: 0
+
+    .pusher
+
+      float: right
+      text-align: right
+
+    @media screen and (max-width: 760px)
+
+      .credits
 
         float: none
+        width: auto
 
-      .pusher
+      .pusher,
+      .gamaroff
 
-        padding-top: 5px
+        display: none

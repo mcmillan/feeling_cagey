@@ -11,6 +11,9 @@ Photo.destroy_all
 # We've not got any media yet, so we want to get the latest media we can find with no minimum ID
 min_id = 0
 
+# Set up the Haar Classifier using haar.xml. fullfrontal_alt.xml appears to work best from the default Haar cascades that are supplied with OpenCV.
+detector = OpenCV::CvHaarClassifierCascade::load(File.expand_path(File.dirname(__FILE__) + '/haar.xml'))
+
 # I will loop you until the end of time
 #  - Beyonce, 2013
 while true
@@ -46,9 +49,6 @@ while true
       uploader: (Digest::SHA2.new << m.user.username).to_s,
       filter: m.filter
     })
-
-    # Set up the Haar Classifier using haar.xml. fullfrontal_alt.xml appears to work best from the default Haar cascades that are supplied with OpenCV.
-    detector    = OpenCV::CvHaarClassifierCascade::load(File.expand_path(File.dirname(__FILE__) + '/haar.xml'))
 
     # Define where we're going to whack this image temporarily.
     # All Instagram images are jpegs for now

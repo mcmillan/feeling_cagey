@@ -145,14 +145,52 @@ footer
       float: right
       text-align: right
 
+      img
+
+        height: 17px
+
+    .gamaroff
+
+      img
+
+        height: 14px
+
+      &.mobile
+
+        display: none
+
+      &.desktop
+
+        display: block
+
     @media screen and (max-width: 760px)
 
-      .credits
+      padding-top: 6px
+
+      .credits,
+      .gamaroff
 
         float: none
         width: auto
 
-      .pusher,
-      .gamaroff
+      .pusher
 
         display: none
+
+      .gamaroff
+
+        text-align: center
+
+        img
+
+          height: 10px
+          margin-top: 3px
+
+        &.desktop
+
+          display: none
+
+        &.mobile
+
+          display: block
+

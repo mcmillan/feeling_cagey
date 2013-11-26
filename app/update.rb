@@ -41,6 +41,11 @@ while true
       next
     end
 
+    if ExcludedUser.where(username: m.user.username).any?
+      puts "--- User has requested exclusion, skipping"
+      next
+    end
+
     p = Photo.new({      
       image_url: m.images.standard_resolution.url,
       width: m.images.standard_resolution.width,

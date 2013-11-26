@@ -19,3 +19,4 @@ end
 Pusher.url = ENV["PUSHER_URL"]
 
 require "models/photo"
+require "models/excluded_user"
